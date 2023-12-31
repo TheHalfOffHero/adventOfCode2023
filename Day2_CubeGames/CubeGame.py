@@ -40,15 +40,37 @@ def cubeGame(numRed, numBlue, numGreen, fileInput):
         print('Game ' + GameId + ' is possible')
         idSum = idSum + int(GameId)
     print(idSum)
+
+def sumPowerOfMinCubes(fileInput):
+  sumOfPowers = 0
+  
+  with open(fileInput) as file:
+    for line in file:
+      maxBlue, maxRed, maxGreen = 0, 0, 0
       
-def getCountAndColor(string):
-  array = re.findall(r'(\d+) (\w+)', string)
-  print(array)
+      blueCubes = re.findall(r'(\d+) blue', line)
+      for num in blueCubes:
+        if int(num) > maxBlue:
+          maxBlue = int(num)
+          
       
+      redCubes = re.findall(r'(\d+) red', line)
+      for num in redCubes:
+        if int(num) > maxRed:
+          maxRed = int(num)
       
+      greenCubes = re.findall(r'(\d+) green', line)
+      for num in greenCubes:
+        if int(num) > maxGreen:
+          maxGreen = int(num)
+          
+      sumOfPowers = sumOfPowers + (maxBlue * maxRed * maxGreen)
+      print(f'Blue: {maxBlue}, Red: {maxRed}, Green: {maxGreen}; Sum: {sumOfPowers}')
+
 if __name__ == '__main__':
   testInput = './CubeGameTest.txt'
   liveInput = './CubeGameInput.txt'
   
-  #cubeGame(4, 5, 6, testInput)
-  cubeGame(12, 14, 13, liveInput)
+  #cubeGame(12, 14, 13, liveInput)
+  
+  sumPowerOfMinCubes(liveInput)
